@@ -26,7 +26,7 @@ function parse_string(string: string, open_bracket: string = "(", close_bracket:
     const token_re = new RegExp(token_re_string, "g");
     // tokenize the linearized parse tree
     const matches = string.matchAll(token_re);
-    let stack: Array<Tree> = [{ label: null, children: [] }];
+    let stack: Array<Tree> = [{ label: "", children: [] }];
     for (const match of matches) {
         // new sub-tree
         if (match[0][0] === open_bracket) {
@@ -34,8 +34,12 @@ function parse_string(string: string, open_bracket: string = "(", close_bracket:
         }
         // end sub-tree
         else if (match[0] === close_bracket) {
-            const last_tree = stack.pop();
-            stack[stack.length - 1].children.push(last_tree);
+            const last_tree: Tree | undefined = stack.pop();
+            if (last_tree === undefined) {
+                console.log("Parsing error")
+            } else {
+                stack[stack.length - 1].children.push(last_tree);
+            }
         }
         // leaf node
         else {
