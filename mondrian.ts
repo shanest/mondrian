@@ -5,7 +5,7 @@ https://www.nltk.org/_modules/nltk/tree.html
 */
 
 // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
-function escapeRegExp(string: string): string {
+const escapeRegExp = function escapeRegExp(string: string): string {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
@@ -14,7 +14,7 @@ interface Tree {
     children: Array<Tree>;
 }
 
-function parse_string(string: string, open_bracket: string = "(", close_bracket: string = ")"): Tree {
+const parse_string = function parse_string(string: string, open_bracket: string = "(", close_bracket: string = ")"): Tree {
     // TODO: docstring here
     // TODO: error handling
     // prep reg-ex for tokenizing the linearized parse tree
@@ -47,5 +47,5 @@ function parse_string(string: string, open_bracket: string = "(", close_bracket:
         }
     }
     const tree: Tree = stack[stack.length - 1].children[0];
-    return tree
+    return tree;
 }

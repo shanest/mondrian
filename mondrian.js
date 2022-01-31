@@ -5,10 +5,10 @@ Inspired by NLTK:
 https://www.nltk.org/_modules/nltk/tree.html
 */
 // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
-function escapeRegExp(string) {
+const escapeRegExp = function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-}
-function parse_string(string, open_bracket = "(", close_bracket = ")") {
+};
+const parse_string = function parse_string(string, open_bracket = "(", close_bracket = ")") {
     // TODO: docstring here
     // TODO: error handling
     // prep reg-ex for tokenizing the linearized parse tree
@@ -43,4 +43,4 @@ function parse_string(string, open_bracket = "(", close_bracket = ")") {
     }
     const tree = stack[stack.length - 1].children[0];
     return tree;
-}
+};
