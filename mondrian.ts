@@ -3,11 +3,18 @@ Parsing of string rep of constituency parse trees.
 Inspired by NLTK:
 https://www.nltk.org/_modules/nltk/tree.html
 */
+
 // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
-function escapeRegExp(string) {
+function escapeRegExp(string: string): string {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
-function parse_string(string, open_bracket = "(", close_bracket = ")") {
+
+interface Tree {
+    label: string;
+    children: Array<Tree>;
+}
+
+function parse_string(string: string, open_bracket: string = "(", close_bracket: string = ")"): Tree {
     // TODO: docstring here
     // TODO: error handling
     // prep reg-ex for tokenizing the linearized parse tree
@@ -19,7 +26,7 @@ function parse_string(string, open_bracket = "(", close_bracket = ")") {
     const token_re = new RegExp(token_re_string, "g");
     // tokenize the linearized parse tree
     const matches = string.matchAll(token_re);
-    let stack = [{ label: null, children: [] }];
+    let stack: Array<Tree> = [{ label: null, children: [] }];
     for (const match of matches) {
         // new sub-tree
         if (match[0][0] === open_bracket) {
@@ -35,6 +42,6 @@ function parse_string(string, open_bracket = "(", close_bracket = ")") {
             stack[stack.length - 1].children.push({ label: match[0], children: [] });
         }
     }
-    const tree = stack[stack.length - 1].children[0];
-    return tree;
+    const tree: Tree = stack[stack.length - 1].children[0];
+    return tree
 }
