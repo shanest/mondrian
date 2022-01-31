@@ -14,14 +14,14 @@ function parse_string(string, open_bracket = "(", close_bracket = ")") {
     // TODO: docstring here
     // TODO: error handling
     // prep reg-ex for tokenizing the linearized parse tree
-    let open_br = escapeRegExp(open_bracket);
-    let close_br = escapeRegExp(close_bracket);
+    const open_br = escapeRegExp(open_bracket);
+    const close_br = escapeRegExp(close_bracket);
     const node_pattern = `[^\\s${open_br}${close_br}]+`;
     const leaf_pattern = `[^\\s${open_br}${close_br}]+`;
     const token_re_string = `${open_br}\\s*(${node_pattern})?|${close_br}|${leaf_pattern}`;
     const token_re = new RegExp(token_re_string, "g");
     // tokenize the linearized parse tree
-    let matches = string.matchAll(token_re);
+    const matches = string.matchAll(token_re);
     let stack = [{ label: null, children: [] }];
     for (const match of matches) {
         // new sub-tree
@@ -30,7 +30,7 @@ function parse_string(string, open_bracket = "(", close_bracket = ")") {
         }
         // end sub-tree
         else if (match[0] === close_bracket) {
-            last_tree = stack.pop();
+            const last_tree = stack.pop();
             stack[stack.length - 1].children.push(last_tree);
         }
         // leaf node
@@ -38,6 +38,6 @@ function parse_string(string, open_bracket = "(", close_bracket = ")") {
             stack[stack.length - 1].children.push({ label: match[0], children: [] });
         }
     }
-    tree = stack[stack.length - 1].children[0];
+    const tree = stack[stack.length - 1].children[0];
     return tree
 }
