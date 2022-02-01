@@ -96,48 +96,6 @@ const treeToRectangles = function treeToRectangles(tree, parentRectangle, vertic
     }
     return rectangles;
 };
-const treeToTable = function (tree, verticalProb = 0.5) {
-    // TODO: docstring
-    // TODO: style it!!
-    // TODO: heights/widths and/or colors somehow derived from length of label??
-    // base case: no table for leaf nodes
-    if (tree.children.length == 0) {
-        return null;
-    }
-    let table = document.createElement('table');
-    table.style.padding = "0";
-    table.style.borderCollapse = "collapse";
-    const vertical_split = Math.random() < verticalProb;
-    // add parent tr if going to split into td's, else nothing
-    let parent_node;
-    if (vertical_split) {
-        parent_node = document.createElement('tr');
-        table.appendChild(parent_node);
-    }
-    else {
-        parent_node = table;
-    }
-    for (const child of tree.children) {
-        let child_node;
-        if (vertical_split) {
-            child_node = document.createElement('td');
-            parent_node.appendChild(child_node);
-        }
-        else {
-            let intermediate_node = document.createElement('tr');
-            child_node = document.createElement('td');
-            intermediate_node.appendChild(child_node);
-            parent_node.appendChild(intermediate_node);
-        }
-        const child_table = treeToTable(child);
-        if (child_table != null) {
-            child_node.appendChild(child_table);
-            // turn borders off if there will be a nested table
-            child_node.style.border = "0";
-        }
-    }
-    return table;
-};
 const setAttributes = function setAttributes(element, attributes) {
     Object.keys(attributes).forEach(key => element.setAttribute(key, attributes[key]));
 };
@@ -150,16 +108,9 @@ window.onload = function () {
     const tree = parseString(testString);
     console.log(tree);
     console.log(treeToRectangles(tree, { x: 0, y: 0, width: 500, height: 500 }));
-    let frame = document.getElementById("frame");
-    if (frame != null) {
-        const table = treeToTable(parseString(testString));
-        if (table != null) {
-            frame.appendChild(table);
-        }
-    }
     const colors = ['red', 'blue', 'yellow'];
     const color_prob = 0.7;
-    frame = document.getElementById("svg-frame");
+    let frame = document.getElementById("frame");
     if (frame != null) {
         const width = 500;
         const height = 500;
