@@ -138,6 +138,13 @@ const treeToTable = function (tree, verticalProb = 0.5) {
     }
     return table;
 };
+const setAttributes = function setAttributes(element, attributes) {
+    Object.keys(attributes).forEach(key => element.setAttribute(key, attributes[key]));
+};
+const randomChoice = function randomChoice(arr) {
+    const index = Math.floor(Math.random() * arr.length);
+    return arr[index];
+};
 window.onload = function () {
     const testString = "(S (NP (Det The) (N Teacher)) (VP (V talks) (Adv quickly)))";
     const tree = parseString(testString);
@@ -149,5 +156,31 @@ window.onload = function () {
         if (table != null) {
             frame.appendChild(table);
         }
+    }
+    const colors = ['red', 'blue', 'yellow'];
+    const color_prob = 0.7;
+    frame = document.getElementById("svg-frame");
+    if (frame != null) {
+        const width = 500;
+        const height = 500;
+        const rectangles = treeToRectangles(tree, { x: 0, y: 0, width: width, height: height });
+        let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        setAttributes(svg, {
+            "viewBox": `0 0 ${width} ${height}`,
+            "height": height.toString(),
+            "width": width.toString()
+        });
+        for (const rect of rectangles) {
+            let svg_rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            setAttributes(svg_rect, {
+                "x": rect.x.toString(),
+                "y": rect.y.toString(),
+                "width": rect.width.toString(),
+                "height": rect.height.toString()
+            });
+            svg_rect.setAttribute("fill", Math.random() < color_prob ? randomChoice(colors) : 'white');
+            svg.appendChild(svg_rect);
+        }
+        frame.appendChild(svg);
     }
 };

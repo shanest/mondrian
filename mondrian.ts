@@ -161,6 +161,15 @@ const treeToTable = function (tree: Tree, verticalProb: number = 0.5): HTMLTable
     return table;
 }
 
+const setAttributes = function setAttributes(element: HTMLElement | SVGElement, attributes: { [key: string]: string }) {
+    Object.keys(attributes).forEach(key => element.setAttribute(key, attributes[key]));
+}
+
+const randomChoice = function randomChoice<Type>(arr: Array<Type>): Type {
+    const index = Math.floor(Math.random() * arr.length);
+    return arr[index];
+}
+
 window.onload = function () {
     const testString: string = "(S (NP (Det The) (N Teacher)) (VP (V talks) (Adv quickly)))";
     const tree = parseString(testString);
@@ -172,5 +181,42 @@ window.onload = function () {
         if (table != null) {
             frame.appendChild(table);
         }
+    }
+
+    const colors = ['red', 'blue', 'yellow'];
+    const color_prob = 0.7;
+
+    frame = document.getElementById("svg-frame");
+    if (frame != null) {
+        const width: number = 500;
+        const height: number = 500;
+        const rectangles: Array<Rectangle> = treeToRectangles(tree, { x: 0, y: 0, width: width, height: height });
+        let svg: SVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        setAttributes(
+            svg,
+            {
+                "viewBox": `0 0 ${width} ${height}`,
+                "height": height.toString(),
+                "width": width.toString()
+            }
+        );
+        for (const rect of rectangles) {
+            let svg_rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            setAttributes(
+                svg_rect,
+                {
+                    "x": rect.x.toString(),
+                    "y": rect.y.toString(),
+                    "width": rect.width.toString(),
+                    "height": rect.height.toString()
+                }
+            );
+            svg_rect.setAttribute(
+                "fill",
+                Math.random() < color_prob ? randomChoice<string>(colors) : 'white'
+            );
+            svg.appendChild(svg_rect);
+        }
+        frame.appendChild(svg);
     }
 };
