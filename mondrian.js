@@ -108,7 +108,7 @@ const randomChoice = function randomChoice(arr) {
     return arr[index];
 };
 window.onload = function () {
-    const testString = "(S (NP (NNP Chomsky)) (ADVP (RB famously)) (VP (VBD wrote) (NP (NP (DT the) (NN sentence)) (S (NP (JJ Colorless) (JJ green) (NNS ideas)) (VP (VBP sleep) (ADVP (RB furiously)))) )) (. .))";
+    const testString = "(S (NP (NNP Chomsky)) (ADVP (RB famously)) (VP (VBD wrote) (NP (NP (DT the) (NN sentence)) (\`\` \") (S (NP (JJ Colorless) (JJ green) (NNS ideas)) (VP (VBP sleep) (ADVP (RB furiously)))) (\" \"))) (. .))";
     const tree = parseString(testString);
     console.log(tree);
     console.log(treeToRectangles(tree, { x: 0, y: 0, width: 500, height: 500 }));
