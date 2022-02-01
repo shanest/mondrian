@@ -8,6 +8,10 @@ https://www.nltk.org/_modules/nltk/tree.html
 const escapeRegExp = function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 };
+const addChild = function (tree, child) {
+    tree.children.push(child);
+    tree.span_length += child.span_length;
+};
 const parseString = function parse_string(string, open_bracket = "(", close_bracket = ")") {
     // TODO: docstring here
     // TODO: error handling
@@ -20,11 +24,11 @@ const parseString = function parse_string(string, open_bracket = "(", close_brac
     const token_re = new RegExp(token_re_string, "g");
     // tokenize the linearized parse tree
     const matches = string.matchAll(token_re);
-    let stack = [{ label: "", children: [] }];
+    let stack = [{ label: "", children: [], span_length: 0 }];
     for (const match of matches) {
         // new sub-tree
         if (match[0][0] === open_bracket) {
-            stack.push({ label: match[1], children: [] });
+            stack.push({ label: match[1], children: [], span_length: 0 });
         }
         // end sub-tree
         else if (match[0] === close_bracket) {
@@ -33,12 +37,13 @@ const parseString = function parse_string(string, open_bracket = "(", close_brac
                 console.log("Parsing error");
             }
             else {
-                stack[stack.length - 1].children.push(last_tree);
+                addChild(stack[stack.length - 1], last_tree);
             }
         }
         // leaf node
         else {
-            stack[stack.length - 1].children.push({ label: match[0], children: [] });
+            const new_tree = { label: match[0], children: [], span_length: match[0].length };
+            addChild(stack[stack.length - 1], new_tree);
         }
     }
     const tree = stack[stack.length - 1].children[0];
@@ -90,6 +95,7 @@ window.onload = function () {
     const testString = "(S (NP (Det The) (N Teacher)) (VP (V talks) (Adv quickly)))";
     let frame = document.getElementById("frame");
     if (frame != null) {
+        console.log(parseString(testString));
         const table = treeToTable(parseString(testString));
         if (table != null) {
             frame.appendChild(table);

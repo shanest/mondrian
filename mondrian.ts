@@ -12,6 +12,20 @@ const escapeRegExp = function escapeRegExp(string: string): string {
 interface Tree {
     label: string;
     children: Array<Tree>;
+    span_length: number;
+}
+
+interface Rectangle {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+
+const addChild = function(tree: Tree, child: Tree) {
+    // TODO: docstring
+    tree.children.push(child);
+    tree.span_length += child.span_length;
 }
 
 const parseString = function parse_string(string: string, open_bracket: string = "(", close_bracket: string = ")"): Tree {
@@ -26,11 +40,11 @@ const parseString = function parse_string(string: string, open_bracket: string =
     const token_re = new RegExp(token_re_string, "g");
     // tokenize the linearized parse tree
     const matches = string.matchAll(token_re);
-    let stack: Array<Tree> = [{ label: "", children: [] }];
+    let stack: Array<Tree> = [{ label: "", children: [], span_length: 0 }];
     for (const match of matches) {
         // new sub-tree
         if (match[0][0] === open_bracket) {
-            stack.push({ label: match[1], children: [] });
+            stack.push({ label: match[1], children: [], span_length: 0 });
         }
         // end sub-tree
         else if (match[0] === close_bracket) {
@@ -38,17 +52,19 @@ const parseString = function parse_string(string: string, open_bracket: string =
             if (last_tree === undefined) {
                 console.log("Parsing error")
             } else {
-                stack[stack.length - 1].children.push(last_tree);
+                addChild(stack[stack.length - 1], last_tree)
             }
         }
         // leaf node
         else {
-            stack[stack.length - 1].children.push({ label: match[0], children: [] });
+            const new_tree = { label: match[0], children: [], span_length: match[0].length };
+            addChild(stack[stack.length - 1], new_tree)
         }
     }
     const tree: Tree = stack[stack.length - 1].children[0];
     return tree;
 }
+
 
 const treeToTable = function (tree: Tree, verticalProb: number = 0.5): HTMLTableElement | null {
     // TODO: docstring
@@ -95,6 +111,7 @@ window.onload = function () {
     const testString: string = "(S (NP (Det The) (N Teacher)) (VP (V talks) (Adv quickly)))";
     let frame = document.getElementById("frame");
     if (frame != null) {
+        console.log(parseString(testString));
         const table = treeToTable(parseString(testString));
         if (table != null) {
             frame.appendChild(table);
