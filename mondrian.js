@@ -9,6 +9,7 @@ const escapeRegExp = function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 };
 const addChild = function (tree, child) {
+    // TODO: docstring
     tree.children.push(child);
     tree.span_length += child.span_length;
 };
@@ -48,6 +49,52 @@ const parseString = function parse_string(string, open_bracket = "(", close_brac
     }
     const tree = stack[stack.length - 1].children[0];
     return tree;
+};
+const numsToPercents = function numsToPercentages(nums) {
+    let sum = nums.reduce((partialSum, num) => partialSum + num, 0);
+    return nums.map((num) => num / sum);
+};
+const treeToRectangles = function treeToRectangles(tree, parentRectangle, verticalProb = 0.5) {
+    // base case
+    if (tree.children.length === 0) {
+        return [parentRectangle];
+    }
+    const verticalSplit = Math.random() < verticalProb;
+    const totalSpread = verticalSplit ? parentRectangle.height : parentRectangle.width;
+    const percentSplits = numsToPercents(tree.children.map(child => child.span_length));
+    // TODO: make sure sum adds to total
+    // TODO: add noise here?
+    const spans = percentSplits.map(percent => Math.floor(percent * totalSpread));
+    console.log(spans);
+    let rectangles = [];
+    let cur_x = parentRectangle.x;
+    let cur_y = parentRectangle.y;
+    for (let idx = 0; idx < tree.children.length; idx++) {
+        const span = spans[idx];
+        if (verticalSplit) {
+            rectangles.push(
+            // spread list of rectangles as arg to push
+            ...treeToRectangles(tree.children[idx], {
+                x: cur_x,
+                y: cur_y,
+                height: span,
+                width: parentRectangle.width
+            }));
+            cur_y += span;
+        }
+        else {
+            rectangles.push(
+            // spread list of rectangles as arg to push
+            ...treeToRectangles(tree.children[idx], {
+                x: cur_x,
+                y: cur_y,
+                height: parentRectangle.height,
+                width: span
+            }));
+            cur_x += span;
+        }
+    }
+    return rectangles;
 };
 const treeToTable = function (tree, verticalProb = 0.5) {
     // TODO: docstring
@@ -93,9 +140,11 @@ const treeToTable = function (tree, verticalProb = 0.5) {
 };
 window.onload = function () {
     const testString = "(S (NP (Det The) (N Teacher)) (VP (V talks) (Adv quickly)))";
+    const tree = parseString(testString);
+    console.log(tree);
+    console.log(treeToRectangles(tree, { x: 0, y: 0, width: 500, height: 500 }));
     let frame = document.getElementById("frame");
     if (frame != null) {
-        console.log(parseString(testString));
         const table = treeToTable(parseString(testString));
         if (table != null) {
             frame.appendChild(table);
