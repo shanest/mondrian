@@ -106,14 +106,14 @@ const randomChoice = function randomChoice(arr) {
     const index = Math.floor(Math.random() * arr.length);
     return arr[index];
 };
-window.onload = function () {
+const drawMontreean = function () {
     const theString = document.getElementById("parse-input").value;
     const tree = parseString(theString);
-    console.log(tree);
-    console.log(treeToRectangles(tree, { x: 0, y: 0, width: 500, height: 500 }));
     const colors = ['red', 'blue', 'yellow'];
     const color_prob = 0.4;
     let frame = document.getElementById("frame");
+    // clear out any previous
+    frame.innerHTML = "";
     if (frame != null) {
         const width = frame.clientWidth;
         const height = width;
@@ -153,3 +153,4 @@ window.onload = function () {
         frame.appendChild(svg);
     }
 };
+window.onload = drawMontreean;
