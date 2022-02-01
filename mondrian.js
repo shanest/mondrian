@@ -116,8 +116,8 @@ window.onload = function () {
     const color_prob = 0.4;
     let frame = document.getElementById("frame");
     if (frame != null) {
-        const width = 500;
-        const height = 500;
+        const width = frame.offsetWidth;
+        const height = width;
         const rectangles = treeToRectangles(tree, { x: 0, y: 0, width: width, height: height });
         let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         setAttributes(svg, {
