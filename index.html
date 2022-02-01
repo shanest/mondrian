@@ -18,7 +18,7 @@
     <script type="text/javascript" src="mondrian.js"></script>
 </head>
 
-<body class="d-flex h-100 text-center text-white bg-secondary">
+<body class="d-flex h-100 text-white bg-secondary">
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
@@ -33,9 +33,16 @@
         </header>
 
         <main class="px-3">
-            <h1>Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit
-                the text, and add your own fullscreen background photo to make it your own.</p>
+            <p class="lead">Visualize constituency parse trees vaguely in the style of Mondrian.</p>
+
+            <form>
+                <div class="py-3">
+                    <label for="parse-input" class="form-label">Parse tree:</label>
+                    <input type="text" class="form-control" id="parse-input" aria-describedby="parseHelp" Value="(S (NP (NNP Chomsky)) (ADVP (RB famously)) (VP (VBD wrote) (NP (NP (DT the) (NN sentence)) ('' '') (S (NP (JJ Colorless) (JJ green) (NNS ideas)) (VP (VBP sleep) (ADVP (RB furiously)))) ('' ''))) (. .))" />
+                    <div id="parseHelp" class="form-text">Enter a valid linearized parse tree here.</div>
+                </div>
+            </form>
+
             <p class="lead">
                 <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
             </p>

@@ -135,8 +135,8 @@ const randomChoice = function randomChoice<Type>(arr: Array<Type>): Type {
 }
 
 window.onload = function () {
-    const testString: string = "(S (NP (NNP Chomsky)) (ADVP (RB famously)) (VP (VBD wrote) (NP (NP (DT the) (NN sentence)) (\`\` \") (S (NP (JJ Colorless) (JJ green) (NNS ideas)) (VP (VBP sleep) (ADVP (RB furiously)))) (\" \"))) (. .))";
-    const tree = parseString(testString);
+    const theString: string = (<HTMLInputElement>document.getElementById("parse-input")).value;
+    const tree = parseString(theString);
     console.log(tree);
     console.log(treeToRectangles(tree, { x: 0, y: 0, width: 500, height: 500 }));
     const colors = ['red', 'blue', 'yellow'];
