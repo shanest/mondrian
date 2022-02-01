@@ -50,8 +50,11 @@ const parseString = function parse_string(string, open_bracket = "(", close_brac
     const tree = stack[stack.length - 1].children[0];
     return tree;
 };
+const sumOfNums = function sumOfNums(nums) {
+    return nums.reduce((partialSum, num) => partialSum + num, 0);
+};
 const numsToPercents = function numsToPercentages(nums) {
-    let sum = nums.reduce((partialSum, num) => partialSum + num, 0);
+    let sum = sumOfNums(nums);
     return nums.map((num) => num / sum);
 };
 const treeToRectangles = function treeToRectangles(tree, parentRectangle, verticalProb = 0.5) {
@@ -62,9 +65,10 @@ const treeToRectangles = function treeToRectangles(tree, parentRectangle, vertic
     const verticalSplit = Math.random() < verticalProb;
     const totalSpread = verticalSplit ? parentRectangle.height : parentRectangle.width;
     const percentSplits = numsToPercents(tree.children.map(child => child.span_length));
-    // TODO: make sure sum adds to total
     // TODO: add noise here?
     const spans = percentSplits.map(percent => Math.floor(percent * totalSpread));
+    // make sure the spans add up to total
+    spans[spans.length - 1] += totalSpread - sumOfNums(spans);
     console.log(spans);
     let rectangles = [];
     let cur_x = parentRectangle.x;
@@ -109,7 +113,7 @@ window.onload = function () {
     console.log(tree);
     console.log(treeToRectangles(tree, { x: 0, y: 0, width: 500, height: 500 }));
     const colors = ['red', 'blue', 'yellow'];
-    const color_prob = 0.7;
+    const color_prob = 0.4;
     let frame = document.getElementById("frame");
     if (frame != null) {
         const width = 500;
@@ -132,6 +136,19 @@ window.onload = function () {
             svg_rect.setAttribute("fill", Math.random() < color_prob ? randomChoice(colors) : 'white');
             svg.appendChild(svg_rect);
         }
+        // outer border hack...
+        // TODO: more elegant?
+        let outer_rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        outer_rect.style.stroke = 'black';
+        outer_rect.style.strokeWidth = '6px';
+        setAttributes(outer_rect, {
+            "x": "0",
+            "y": "0",
+            "width": width.toString(),
+            "height": height.toString(),
+            "fill": "none"
+        });
+        svg.appendChild(outer_rect);
         frame.appendChild(svg);
     }
 };
