@@ -164,13 +164,15 @@ window.onload = function () {
                     "x": rect.x.toString(),
                     "y": rect.y.toString(),
                     "width": rect.width.toString(),
-                    "height": rect.height.toString()
+                    "height": rect.height.toString(),
                 }
             );
             svg_rect.setAttribute(
                 "fill",
                 Math.random() < color_prob ? randomChoice<string>(colors) : 'white'
             );
+            svg_rect.style.stroke = "black";
+            svg_rect.style.strokeWidth = "3px";
             svg.appendChild(svg_rect);
         }
         // outer border hack...
