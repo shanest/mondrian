@@ -2,6 +2,9 @@
  * Globals
  */
 
+ a {
+     color:lightsalmon;
+ }
 
 /* Custom default button */
 .btn-secondary,

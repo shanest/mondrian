@@ -110,14 +110,15 @@ const drawMontreean = function () {
     const theString = document.getElementById("parse-input").value;
     const tree = parseString(theString);
     const colors = ['red', 'blue', 'yellow'];
-    const color_prob = 0.4;
+    const colorProb = parseFloat(document.getElementById("cellColor").value);
+    const verticalSplitProb = parseFloat(document.getElementById("verticalSplit").value);
     let frame = document.getElementById("frame");
     // clear out any previous
     frame.innerHTML = "";
     if (frame != null) {
         const width = frame.clientWidth;
         const height = width;
-        const rectangles = treeToRectangles(tree, { x: 0, y: 0, width: width, height: height });
+        const rectangles = treeToRectangles(tree, { x: 0, y: 0, width: width, height: height }, verticalSplitProb);
         let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         setAttributes(svg, {
             "viewBox": `0 0 ${width} ${height}`,
@@ -132,7 +133,7 @@ const drawMontreean = function () {
                 "width": rect.width.toString(),
                 "height": rect.height.toString(),
             });
-            svg_rect.setAttribute("fill", Math.random() < color_prob ? randomChoice(colors) : 'white');
+            svg_rect.setAttribute("fill", Math.random() < colorProb ? randomChoice(colors) : 'white');
             svg_rect.style.stroke = "black";
             svg_rect.style.strokeWidth = "3px";
             svg.appendChild(svg_rect);

@@ -138,7 +138,8 @@ const drawMontreean = function () {
     const theString: string = (<HTMLInputElement>document.getElementById("parse-input")).value;
     const tree = parseString(theString);
     const colors = ['red', 'blue', 'yellow'];
-    const color_prob = 0.4;
+    const colorProb: number = parseFloat((<HTMLInputElement>document.getElementById("cellColor")).value);
+    const verticalSplitProb: number = parseFloat((<HTMLInputElement>document.getElementById("verticalSplit")).value);
 
     let frame = document.getElementById("frame");
     // clear out any previous
@@ -147,7 +148,7 @@ const drawMontreean = function () {
     if (frame != null) {
         const width: number = frame.clientWidth;
         const height: number = width;
-        const rectangles: Array<Rectangle> = treeToRectangles(tree, { x: 0, y: 0, width: width, height: height });
+        const rectangles: Array<Rectangle> = treeToRectangles(tree, { x: 0, y: 0, width: width, height: height }, verticalSplitProb);
         let svg: SVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         setAttributes(
             svg,
@@ -170,7 +171,7 @@ const drawMontreean = function () {
             );
             svg_rect.setAttribute(
                 "fill",
-                Math.random() < color_prob ? randomChoice<string>(colors) : 'white'
+                Math.random() < colorProb ? randomChoice<string>(colors) : 'white'
             );
             svg_rect.style.stroke = "black";
             svg_rect.style.strokeWidth = "3px";

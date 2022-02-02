@@ -26,19 +26,32 @@
                 <h2 class="float-md-start mb-0">Montreean</h2>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="#options">More Options</a>
                     <a class="nav-link" href="#">Contact</a>
                 </nav>
             </div>
         </header>
 
         <main class="px-3">
-            <p class="lead pt-3">Visualize constituency parse trees vaguely in the style of Mondrian.</p>
+            <p class="lead pt-3">Visualize constituency parse trees vaguely in the style of <a
+                    href="https://en.wikipedia.org/wiki/Piet_Mondrian">Mondrian</a>.</p>
+
+            <p>To generate a visualization, enter a linearized version of a constituency parse tree (see e.g. pp. 4-5 of
+                <a href="https://web.stanford.edu/~jurafsky/slp3/12.pdf">this chapter</a>) in the box below. You can
+                either supply your own or generate such strings from English sentences using e.g. the <a
+                    href="https://parser.kitaev.io/">Berkeley Parser</a>. The demo example contains a parse for the
+                sentence &quot;Chomsky famously wrote the sentence &quot;Colorless green ideas sleep
+                furiously&quot;.&quot;.
+            </p>
+
+            <p>Note: the algorithm is stochastic, so you can re-press the &quot;Draw!&quot; button to get different
+                visualizations of the same parse tree.</p>
 
             <form onsubmit="drawMontreean()">
                 <div class="py-3">
                     <label for="parse-input" class="form-label">Parse tree:</label>
-                    <input type="text" class="form-control" id="parse-input" Value="(S (NP (NNP Chomsky)) (ADVP (RB famously)) (VP (VBD wrote) (NP (NP (DT the) (NN sentence)) ('' '') (S (NP (JJ Colorless) (JJ green) (NNS ideas)) (VP (VBP sleep) (ADVP (RB furiously)))) ('' ''))) (. .))" />
+                    <input type="text" class="form-control" id="parse-input"
+                        Value="(S (NP (NNP Chomsky)) (ADVP (RB famously)) (VP (VBD wrote) (NP (NP (DT the) (NN sentence)) ('' '') (S (NP (JJ Colorless) (JJ green) (NNS ideas)) (VP (VBP sleep) (ADVP (RB furiously)))) ('' ''))) (. .))" />
                 </div>
                 <div class="pb-3">
                     <button type="submit" class="btn btn-primary">Draw!</button>
@@ -46,9 +59,29 @@
             </form>
 
             <div id="frame" class="py-5"></div>
+
+            <div id="options">
+                <h3 class="border-bottom border-white border-2">More options</h3>
+                <div class="row">
+                    <div class="col-4">
+                        <p>Vertical split probability:</p>
+                    </div>
+                    <div class="col">
+                        <input type="number" id="verticalSplit" min="0.0" max="1.0" step="0.01" Value="0.5" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Cell color probability:
+                    </div>
+                    <div class="col">
+                        <input type="number" id="cellColor" min="0.0" max="1.0" step="0.01" Value="0.4" />
+                    </div>
+                </div>
+            </div>
         </main>
 
-        <footer class="mt-auto text-white-50">
+        <footer class="mt-5 text-white-50">
             <p>Some footer text here.</p>
         </footer>
     </div>
