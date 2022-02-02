@@ -22,11 +22,12 @@
 <body class="d-flex h-100 text-white bg-secondary">
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="mb-auto">
+        <header class="mb-auto border-bottom border-white border-4">
             <div>
                 <h2 class="float-md-start mb-0">Montreean</h2>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
-                    <a class="nav-link" href="#options">More Options</a>
+                    <a class="nav-link" href="#description">Brief description</a>
+                    <a class="nav-link" href="#options">More options</a>
                 </nav>
             </div>
         </header>
@@ -59,6 +60,19 @@
             </div>
 
             <div id="frame" class="py-5"></div>
+
+            <div id="description">
+                <h3 class="border-bottom border-white border-2">Brief description</h3>
+                <p>
+                    The algorithm operates on a parse tree, where each node (corresponding to a constituent in the sentence) has a label and some children.  The core of the algorithm takes such a node and recursively generates a set of rectangles.  In particular:
+                </p>
+                <ul>
+                    <li>Each child gets a new sub-rectangle.</li>
+                    <li>The relative sizes of these rectangles corresponds to the length (in characters) of the constituent.</li>
+                    <li>Whether these rectangles divide the parent horizontally or vertically is random (see &quot;Vertical split probability&quot; below.</li>
+                </ul>
+                <p>Then, after all of the rectangles are built, some are randomly chosen (see &quot;Cell color probability&quot;) to be colored a non-white color (see &quot;Cell colors&quot; below).</p>
+            </div>
 
             <div id="options">
                 <h3 class="border-bottom border-white border-2">More options</h3>
