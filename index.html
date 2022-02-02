@@ -68,6 +68,7 @@
                     </div>
                     <div class="col">
                         <input type="number" id="verticalSplit" min="0.0" max="1.0" step="0.01" Value="0.5" />
+                        <div id="verticalSplitHelp" class="form-text text-white"><p>When splitting a large rectangle into sub-rectangles, probability of splitting vertically versus horizontally.</p></div>
                     </div>
                 </div>
                 <div class="row">
@@ -75,7 +76,8 @@
                         <p>Cell color probability:</p>
                     </div>
                     <div class="col">
-                        <input type="number" id="cellColor" min="0.0" max="1.0" step="0.01" Value="0.4" />
+                        <input type="number" id="cellColor" min="0.0" max="1.0" step="0.01" Value="0.4" aria-describedby="colorProbHelp" />
+                        <div id="colorProbHelp" class="form-text text-white"><p>Probability that an individual rectangle will get filled with a (non-white) color.  The color will be chosen uniformly at random from the list below.</p></div>
                     </div>
                 </div>
                 <div class="row">
@@ -83,7 +85,8 @@
                         <p>Cell colors:</p>
                     </div>
                     <div class="col">
-                        <input type="text" id="colorList" Value="red,blue,yellow" />
+                        <input type="text" id="colorList" Value="red,blue,yellow" aria-describedby="colorHelp" />
+                        <div id="colorHelp" class="form-text text-white"><p>Comma-separated list of all of the colors that a cell can take. Each color must be a <a href="https://www.w3.org/TR/css-color-3/#colorunits">valid CSS color</a>.</p></div>
                     </div>
                 </div>
             </div>
