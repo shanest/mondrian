@@ -137,7 +137,7 @@ const randomChoice = function randomChoice<Type>(arr: Array<Type>): Type {
 const drawMontreean = function () {
     const theString: string = (<HTMLInputElement>document.getElementById("parse-input")).value;
     const tree = parseString(theString);
-    const colors = ['red', 'blue', 'yellow'];
+    const colors: Array<string> = (<HTMLInputElement>document.getElementById("colorList")).value.split(",");
     const colorProb: number = parseFloat((<HTMLInputElement>document.getElementById("cellColor")).value);
     const verticalSplitProb: number = parseFloat((<HTMLInputElement>document.getElementById("verticalSplit")).value);
 
