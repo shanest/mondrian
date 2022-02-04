@@ -81,7 +81,8 @@ const treeToRectangles = function treeToRectangles(tree, parentRectangle, vertic
                 x: cur_x,
                 y: cur_y,
                 height: span,
-                width: parentRectangle.width
+                width: parentRectangle.width,
+                text: tree.children[idx].label,
             }));
             cur_y += span;
         }
@@ -92,7 +93,8 @@ const treeToRectangles = function treeToRectangles(tree, parentRectangle, vertic
                 x: cur_x,
                 y: cur_y,
                 height: parentRectangle.height,
-                width: span
+                width: span,
+                text: tree.children[idx].label,
             }));
             cur_x += span;
         }
@@ -118,7 +120,7 @@ const drawMontreean = function () {
     if (frame != null) {
         const width = frame.clientWidth;
         const height = width;
-        const rectangles = treeToRectangles(tree, { x: 0, y: 0, width: width, height: height }, verticalSplitProb);
+        const rectangles = treeToRectangles(tree, { x: 0, y: 0, width: width, height: height, text: "" }, verticalSplitProb);
         let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         setAttributes(svg, {
             "viewBox": `0 0 ${width} ${height}`,
@@ -137,6 +139,15 @@ const drawMontreean = function () {
             svg_rect.style.stroke = "black";
             svg_rect.style.strokeWidth = "3px";
             svg.appendChild(svg_rect);
+            // add text to rectangle
+            // TODO: add checkbox to toggle
+            let rect_text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            rect_text.textContent = rect.text;
+            setAttributes(rect_text, {
+                "x": Math.floor(rect.x + rect.width / 2).toString(),
+                "y": Math.floor(rect.y + rect.height / 2).toString(),
+            });
+            svg.appendChild(rect_text);
         }
         // outer border hack...
         // TODO: more elegant?
