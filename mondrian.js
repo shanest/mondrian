@@ -68,7 +68,6 @@ const treeToRectangles = function treeToRectangles(tree, parentRectangle, vertic
     const spans = percentSplits.map(percent => Math.floor(percent * totalSpread));
     // make sure the spans add up to total
     spans[spans.length - 1] += totalSpread - sumOfNums(spans);
-    console.log(spans);
     let rectangles = [];
     let cur_x = parentRectangle.x;
     let cur_y = parentRectangle.y;
@@ -127,6 +126,7 @@ const drawMontreean = function () {
             "height": height.toString(),
             "width": width.toString()
         });
+        frame.appendChild(svg);
         for (const rect of rectangles) {
             let svg_rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
             setAttributes(svg_rect, {
@@ -145,11 +145,17 @@ const drawMontreean = function () {
             // TODO: dynamically set text size as well
             let rect_text = document.createElementNS("http://www.w3.org/2000/svg", "text");
             rect_text.textContent = rect.text;
-            setAttributes(rect_text, {
-                "x": Math.floor(rect.x + rect.width / 2).toString(),
-                "y": Math.floor(rect.y + rect.height / 2).toString(),
-            });
             svg.appendChild(rect_text);
+            // helpers for putting text in center of rectangle
+            let textBox = rect_text.getClientRects()[0];
+            const rectCenter = {
+                x: Math.floor(rect.x + rect.width / 2),
+                y: Math.floor(rect.y + rect.height / 2),
+            };
+            setAttributes(rect_text, {
+                "x": (rectCenter.x - textBox.width / 2).toString(),
+                "y": (rectCenter.y + textBox.height / 2).toString(),
+            });
         }
         // outer border hack...
         // TODO: more elegant?
@@ -164,7 +170,7 @@ const drawMontreean = function () {
             "fill": "none"
         });
         svg.appendChild(outer_rect);
-        frame.appendChild(svg);
+        // set text visibility
         setTextVisibility();
     }
 };
