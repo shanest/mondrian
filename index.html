@@ -58,20 +58,30 @@
             <div class="pb-3">
                 <button type="submit" class="btn btn-primary" onclick="drawMontreean()">Draw!</button>
             </div>
+            <div>
+                <p>Overlay text of sentence:
+                    <input type="checkbox" id="showText" onclick="setTextVisibility()" />
+                </p>
+            </div>
 
             <div id="frame" class="py-5"></div>
 
             <div id="description">
                 <h3 class="border-bottom border-white border-2">Brief description</h3>
                 <p>
-                    The algorithm operates on a parse tree, where each node (corresponding to a constituent in the sentence) has a label and some children.  The core of the algorithm takes such a node and recursively generates a set of rectangles.  In particular:
+                    The algorithm operates on a parse tree, where each node (corresponding to a constituent in the
+                    sentence) has a label and some children. The core of the algorithm takes such a node and recursively
+                    generates a set of rectangles. In particular:
                 </p>
                 <ul>
                     <li>Each child gets a new sub-rectangle.</li>
-                    <li>The relative sizes of these rectangles corresponds to the length (in characters) of the constituent.</li>
-                    <li>Whether these rectangles divide the parent horizontally or vertically is random (see &quot;Vertical split probability&quot; below.</li>
+                    <li>The relative sizes of these rectangles corresponds to the length (in characters) of the
+                        constituent.</li>
+                    <li>Whether these rectangles divide the parent horizontally or vertically is random (see
+                        &quot;Vertical split probability&quot; below.</li>
                 </ul>
-                <p>Then, after all of the rectangles are built, some are randomly chosen (see &quot;Cell color probability&quot;) to be colored a non-white color (see &quot;Cell colors&quot; below).</p>
+                <p>Then, after all of the rectangles are built, some are randomly chosen (see &quot;Cell color
+                    probability&quot;) to be colored a non-white color (see &quot;Cell colors&quot; below).</p>
             </div>
 
             <div id="options">
@@ -82,7 +92,10 @@
                     </div>
                     <div class="col">
                         <input type="number" id="verticalSplit" min="0.0" max="1.0" step="0.01" Value="0.5" />
-                        <div id="verticalSplitHelp" class="form-text text-white"><p>When splitting a large rectangle into sub-rectangles, probability of splitting vertically versus horizontally.</p></div>
+                        <div id="verticalSplitHelp" class="form-text text-white">
+                            <p>When splitting a large rectangle into sub-rectangles, probability of splitting vertically
+                                versus horizontally.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -90,8 +103,12 @@
                         <p>Cell color probability:</p>
                     </div>
                     <div class="col">
-                        <input type="number" id="cellColor" min="0.0" max="1.0" step="0.01" Value="0.4" aria-describedby="colorProbHelp" />
-                        <div id="colorProbHelp" class="form-text text-white"><p>Probability that an individual rectangle will get filled with a (non-white) color.  The color will be chosen uniformly at random from the list below.</p></div>
+                        <input type="number" id="cellColor" min="0.0" max="1.0" step="0.01" Value="0.4"
+                            aria-describedby="colorProbHelp" />
+                        <div id="colorProbHelp" class="form-text text-white">
+                            <p>Probability that an individual rectangle will get filled with a (non-white) color. The
+                                color will be chosen uniformly at random from the list below.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -100,7 +117,10 @@
                     </div>
                     <div class="col">
                         <input type="text" id="colorList" Value="red,blue,yellow" aria-describedby="colorHelp" />
-                        <div id="colorHelp" class="form-text text-white"><p>Comma-separated list of all of the colors that a cell can take. Each color must be a <a href="https://www.w3.org/TR/css-color-3/#colorunits">valid CSS color</a>.</p></div>
+                        <div id="colorHelp" class="form-text text-white">
+                            <p>Comma-separated list of all of the colors that a cell can take. Each color must be a <a
+                                    href="https://www.w3.org/TR/css-color-3/#colorunits">valid CSS color</a>.</p>
+                        </div>
                     </div>
                 </div>
             </div>

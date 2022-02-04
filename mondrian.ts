@@ -180,7 +180,9 @@ const drawMontreean = function () {
             svg_rect.style.strokeWidth = "3px";
             svg.appendChild(svg_rect);
             // add text to rectangle
-            // TODO: add checkbox to toggle
+            // TODO: rotate text vertically if "vertical" rectangle
+            // TODO: center is currently the _start_ of the text; figure out how to compute size and move appropriately so that the whole text is centered 
+            // TODO: dynamically set text size as well
             let rect_text: SVGElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
             rect_text.textContent = rect.text;
             setAttributes(
@@ -209,8 +211,21 @@ const drawMontreean = function () {
         );
         svg.appendChild(outer_rect);
         frame.appendChild(svg);
+        setTextVisibility();
     }
 
+};
+
+/**
+ * Toggle visibility of text overlay on cells, based on checkbox.
+ */
+const setTextVisibility = function () {
+    const showText: boolean = (<HTMLInputElement>document.getElementById("showText")).checked;
+    const visibility = showText ? "visible" : "hidden";
+    let textElements = document.getElementsByTagName("text");
+    for (let elt of textElements) {
+        elt.style.visibility = visibility;
+    }
 };
 
 window.onload = drawMontreean;
