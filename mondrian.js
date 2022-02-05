@@ -140,9 +140,9 @@ const drawMontreean = function () {
             svg_rect.style.strokeWidth = "3px";
             svg.appendChild(svg_rect);
             // add text to rectangle
-            // TODO: rotate text vertically if "vertical" rectangle
-            // TODO: center is currently the _start_ of the text; figure out how to compute size and move appropriately so that the whole text is centered 
-            // TODO: dynamically set text size as well
+            // TODO: rotate text vertically if "vertical" rectangle?  Not sure this is necessary
+            // transform="rotate(90 x y)"
+            // TODO: dynamically set text size as well?
             let rect_text = document.createElementNS("http://www.w3.org/2000/svg", "text");
             rect_text.textContent = rect.text;
             svg.appendChild(rect_text);
